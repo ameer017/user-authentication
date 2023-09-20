@@ -5,6 +5,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
+const bookingRoute = require("./routes/bookingRoute");
+const propertyRoute = require("./routes/propertyRoute");
 const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -17,13 +19,15 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://realtor-estate.vercel.app"],
+    origin: ["http://localhost:5173", "https://realtor-estate.vercel.app"],
     credentials: true,
   })
 );
 
 // Routes
 app.use("/api/users", userRoute);
+app.use("/api/bookings", bookingRoute);
+app.use("/api/properties", propertyRoute);
 
 app.get("/", (req, res) => {
   res.send("Home Page");
