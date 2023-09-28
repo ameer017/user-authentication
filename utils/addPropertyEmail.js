@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const addPropertyEmail = async (
-    _id, name, location, price, rooms, description, bathroom, car_park, email
+    _id, name, location, price, rooms, description, bathroom, car_park, propertyEmail
   ) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -33,8 +33,8 @@ const addPropertyEmail = async (
 
       const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: email,
-        subject: `Your property ${name} was added successfully!`,
+        to: propertyEmail,
+        subject: `Your property ${name} at ${location} was added successfully!`,
         html: emailContent,
       };
 

@@ -2,55 +2,57 @@ const asyncHandler = require("express-async-handler");
 const Booking = require("../models/bookingModel");
 const sendBookingData = require("../utils/sendBookingData");
 
-
 const createBooking = asyncHandler(async(req, res) => {
-    const {name, email, phone} = req.body;
+  const { name, phone, from, to, bookingEmail} = req.body;
 
-    // Validation
-  if (!name || !email || !phone) {
+  if(!name || !phone || !from || !to) {
     res.status(400);
-    throw new Error("Please fill in all the required fields.");
-  };
+    throw new Error("Please, fill in all the required fields")
+  }
+
 
   const booking = await Booking.create({
-    name, email, phone
-  });
+    name,
+    phone,
+    from,
+    to,
+    bookingEmail
+  })
 
-  const _id = booking._id;
-  
+
   if(booking) {
-    const {_id, name, email, phone, isBooked} = booking;
+    const {_id, name,  phone, from, to, bookingEmail} = booking;
 
     // await sendBookingData(
-    //   _id, name, email, phone
-    // );
+    //   _id, name,  phone, from, to, bookingEmail
+    // )
 
     res.status(201).json({
-        _id,
-        name,
-        email,
-        phone,
-        isBooked
-    });
-  } else{
-    res.status(400);
-    throw new Error('Invalid booking data')
+      _id, 
+      name, 
+      phone, 
+      from, 
+      to,
+      bookingEmail
+    })
   }
-});
+})
 
 const getBooking = asyncHandler(async(req, res) => {
   
     const booking = await Booking.findOne(req.params.name);
 
     if(booking) {
-        const {_id, name, email, phone, isBooked} = booking;
+        const {_id, name, phone, from, to, bookingEmail} = booking;
 
     res.status(200).json({
         _id,
         name,
-        email,
+        bookingEmail,
         phone,
-        isBooked,
+        from, 
+        to,
+        bookingEmail
     });
     } else {
         res.status(404);
@@ -63,12 +65,13 @@ const updateBooking = asyncHandler(async (req, res) => {
     const booking = await Booking.findOne(req.params.name);
   
     if (booking) {
-      const { name, email, phone, isBooked } = booking;
+      const { name, bookingEmail, phone,  from, to } = booking;
   
-      booking.email = email;
+      booking.bookingEmail = bookingEmail;
       booking.name = req.body.name || name;
       booking.phone = req.body.phone || phone;
-      booking.isBooked = req.body.isBooked || isBooked;
+      booking.from = req.body.from || from;
+      booking.to = req.body.to || to;
   
       const updatedBooking = await booking.save();
   
@@ -77,7 +80,8 @@ const updateBooking = asyncHandler(async (req, res) => {
         name: updatedBooking.name,
         email: updatedBooking.email,
         phone: updatedBooking.phone,
-        isBooked: updatedBooking.isBooked,
+        from: updatedBooking.from,
+        to: updatedBooking.to
       });
     } else {
       res.status(404);
@@ -100,7 +104,7 @@ const updateBooking = asyncHandler(async (req, res) => {
     });
   });
   
-  // Get Users
+  // Get Bookings
   const getBookings = asyncHandler(async (req, res) => {
     const booking = await Booking.find().sort("-createdAt");
     if (!booking) {
@@ -116,5 +120,5 @@ module.exports = {
     getBooking,
     updateBooking,
     deleteBooking,
-    getBookings
+    getBookings,
 }

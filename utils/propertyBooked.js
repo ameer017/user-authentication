@@ -12,32 +12,28 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendBookingData = async (
-    _id, name, phone, from, to, bookingEmail
+const propertyBooked = async (
+    _id, name, location, email
   ) => {
   return new Promise(async (resolve, reject) => {
     try {
       const emailContent = `
         <h1>Hello from Homyz Realtor</h1>
-        <p>We are pleased to inform you that your booking order has been received, below is your details</p>
-        <p>Name: ${name}</p>
-        <p>Phone Number: ${phone}</p>
-        <p>From: ${from}</p>
-        <p>To:${to}</p>
+        <p>We are pleased to inform you that your property ${name} has been booked</p>
       `;
 
       console.log(emailContent)
 
       const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: bookingEmail,
-        subject: `A Booking Order was created`,
+        to: email,
+        subject: `Your property ${name} at ${location} has been booked!`,
         html: emailContent,
       };
 
       await transporter.sendMail(mailOptions);
 
-      console.log("Booking creation Email sent");
+      console.log("Add property Email sent");
       
       resolve();
     } catch (error) {
@@ -47,4 +43,4 @@ const sendBookingData = async (
   });
 };
 
-module.exports = sendBookingData;
+module.exports = propertyBooked;

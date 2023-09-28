@@ -30,10 +30,6 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "+234",
     },
-    bio: {
-      type: String,
-      default: "bio",
-    },
     role: {
       type: String,
       required: true,
@@ -42,7 +38,7 @@ const userSchema = mongoose.Schema(
     },
     isVerified: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     userAgent: {
       type: Array,

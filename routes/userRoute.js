@@ -27,7 +27,7 @@ const {
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/logout", logoutUser);
-router.get("/getUser", protect, getUser);
+router.get("/getUser",  getUser);
 router.patch("/updateUser", protect, updateUser);
 
 router.delete("/:id", protect, adminOnly, deleteUser);

@@ -6,27 +6,29 @@ const bookingSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a name"],
     },
-    email: {
-      type: String,
-      required: [true, "Please add an email"],
-      unique: true,
-      trim: true,
-      match: [
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        "Please enter a valid email",
-      ],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Property', // Reference to the Property model
     },
     phone: {
       type: String,
       
     },
-    isBooked: {
-      type: Boolean,
-      default: false,
-    },
-    duration: {
+    from: {
       type: String,
       required: true,
+    },
+    to: {
+      type: String,
+      required: true,
+    },
+    bookingEmail: {
+      type: String, 
+      trim: true,
+      match: [
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        "Please enter a valid email",
+      ],
     },
   },
   {
