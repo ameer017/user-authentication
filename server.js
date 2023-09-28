@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://realtor-estate.vercel.app"],
+    origin: ["http://localhost:3000", "https://client-ten-wheat.vercel.app/", "https://realtor-authentication.onrender.com"],
     credentials: true,
   })
 );
