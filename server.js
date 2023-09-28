@@ -19,7 +19,12 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://client-ten-wheat.vercel.app/", "https://realtor-authentication.onrender.com"],
+    origin: [
+      "http://localhost:3000", 
+      "https://client-ten-wheat.vercel.app/", 
+      "https://realtor-authentication.onrender.com",
+      "*"
+    ],
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   })
