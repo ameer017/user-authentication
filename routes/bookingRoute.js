@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/create-booking', createBooking);
 router.get('/get-booking-data', protect, getBooking);
-router.patch('/update-booking', updateBooking);
+router.patch('/update-booking', protect, updateBooking);
 router.get('/get-bookings', getBookings);
 router.delete('/:id', protect, deleteBooking)
 
