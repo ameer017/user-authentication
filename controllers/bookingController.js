@@ -3,9 +3,9 @@ const Booking = require("../models/bookingModel");
 const sendBookingData = require("../utils/sendBookingData");
 
 const createBooking = asyncHandler(async(req, res) => {
-  const { name, phone, from, to, bookingEmail} = req.body;
+  const { name, phone, from, time, bookingEmail} = req.body;
 
-  if(!name || !phone || !from || !to) {
+  if(!name || !phone || !from || !time) {
     res.status(400);
     throw new Error("Please, fill in all the required fields")
   }
@@ -15,24 +15,20 @@ const createBooking = asyncHandler(async(req, res) => {
     name,
     phone,
     from,
-    to,
+    time,
     bookingEmail
   })
 
 
   if(booking) {
-    const {_id, name,  phone, from, to, bookingEmail} = booking;
-
-    // await sendBookingData(
-    //   _id, name,  phone, from, to, bookingEmail
-    // )
+    const {_id, name,  phone, from, time, bookingEmail} = booking;
 
     res.status(201).json({
       _id, 
       name, 
       phone, 
       from, 
-      to,
+      time,
       bookingEmail
     })
   }
@@ -43,7 +39,7 @@ const getBooking = asyncHandler(async(req, res) => {
     const booking = await Booking.findOne(req.params.name);
 
     if(booking) {
-        const {_id, name, phone, from, to, bookingEmail} = booking;
+        const {_id, name, phone, from, time, bookingEmail} = booking;
 
     res.status(200).json({
         _id,
@@ -51,7 +47,7 @@ const getBooking = asyncHandler(async(req, res) => {
         bookingEmail,
         phone,
         from, 
-        to,
+        time,
         bookingEmail
     });
     } else {
@@ -65,13 +61,13 @@ const updateBooking = asyncHandler(async (req, res) => {
     const booking = await Booking.findOne(req.params.name);
   
     if (booking) {
-      const { name, bookingEmail, phone,  from, to } = booking;
+      const { name, bookingEmail, phone,  from, time } = booking;
   
       booking.bookingEmail = bookingEmail;
       booking.name = req.body.name || name;
       booking.phone = req.body.phone || phone;
       booking.from = req.body.from || from;
-      booking.to = req.body.to || to;
+      booking.time = req.body.time || time;
   
       const updatedBooking = await booking.save();
   
@@ -81,7 +77,7 @@ const updateBooking = asyncHandler(async (req, res) => {
         email: updatedBooking.email,
         phone: updatedBooking.phone,
         from: updatedBooking.from,
-        to: updatedBooking.to
+        time: updatedBooking.time
       });
     } else {
       res.status(404);

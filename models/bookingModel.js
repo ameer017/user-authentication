@@ -18,7 +18,7 @@ const bookingSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    to: {
+    time: {
       type: String,
       required: true,
     },
